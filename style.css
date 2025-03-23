@@ -40,6 +40,16 @@ section {
   padding: 3.5rem 7%;
 }
 
+.box-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(29rem, 1fr));
+  gap: 1.5rem;
+}
+/*  repeat ==> belirtileni tekrarla
+      auto-fit ==> mevcüt alanı doldur ve mümkün olan en fazla sütünü oluştur, eğer alan daralırsa sütünlar otomatik olarak küçülsün ve gerektiğinde kaydırılırsın.
+      30rem ==> min genişilik ==>  her sütunun en az 30rem genişliğinde olacak, 30rem'lik açıldığı an yeni sütünü oluştur.
+      1fr ==> maksimum genişlik ==> eğer yeni açılan yer 30rem değilse 1fr (alabildiği alanın tamamını al) olarak ayarla, yani eşit olarak böl. */
+
 section .heading {
   color: #fff;
   text-transform: uppercase;
@@ -56,17 +66,32 @@ section .heading span {
   margin-top: 1rem;
   display: inline-block; /* a etiketi inline olduğu için block özellik de almasını istedim*/
   padding: 2rem 3.75rem;
-  border-radius: 30rem;
-  font-size: 1.8rem;
+  border-radius: 1rem;
+  font-size: 1.5rem;
   color: #fff;
   background-color: var(--bg-color);
+  cursor: pointer;
 }
 
 .btn:hover {
-  font-size: 2.3rem;
+  font-size: 1.7rem;
   background-color: var(--main-color);
   color: #fff;
 }
+
+a {
+  color: var(--bg-color);
+  text-decoration: none;
+}
+
+.search-input {
+  font-size: 1.6rem;
+  color: var(--bg-color);
+  padding: 1rem;
+  text-transform: none;
+  border-radius: 3rem;
+}
+
 /* ! base html code */
 html {
   font-size: 62.5%;
@@ -76,6 +101,37 @@ html {
 }
 
 /* ! header start */
+header .search-form {
+  position: absolute;
+  top: 115%;
+  right: 7%;
+  background-color: #fff;
+  width: 50rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  border-radius: 3rem;
+  box-shadow: 0px 0px 25px 2px #000;
+  transform: scaleY(
+    0
+  ); /*öğenin dikey boyutunu (yüksekliğini) sıfıra ölçeklendirerek görünmez hale getirir*/
+}
+
+header .search-form i {
+  cursor: pointer;
+  font-size: 2.2rem;
+  margin-right: 1.5rem;
+  color: var(--bg-color);
+}
+
+header .search-form input {
+  width: 100%;
+}
+
+header .search-form.active {
+  transform: scaleY(1);
+}
+
 header img {
   height: 10rem;
 }
@@ -107,11 +163,68 @@ header nav .active {
   padding: 0.5rem;
 }
 
-.buttons button {
+header .buttons button {
   cursor: pointer;
   font-size: 2.5rem;
   margin-left: 2rem;
   background-color: transparent;
+}
+
+header #menu-btn {
+  display: none;
+}
+
+header .card-items-container {
+  position: absolute;
+  top: 95%;
+  height: calc(100vh - 9rem);
+  width: 35rem;
+  background-color: #fff;
+  box-shadow: 0px 20px 14px 0px #000;
+  right: -100%;
+}
+header .card-items-container.active {
+  right: 3rem;
+}
+
+header .card-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+header .card-item:hover {
+  box-shadow: 0px 0px 10px 0px #000;
+}
+
+header .card-item .content h3 {
+  font-size: 2rem;
+  color: var(--bg-color);
+  padding-bottom: 0.5rem;
+}
+
+header .card-item .content .price {
+  font-size: 1.5rem;
+  color: var(--bg-color);
+}
+header .card-item img {
+  height: 7rem;
+}
+
+header .card-item i {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--bg-color);
+}
+
+header .card-items-container .btn {
+  width: 100%;
+  text-align: center;
+  border-radius: unset;
 }
 
 /* ! Home Start */
@@ -145,18 +258,7 @@ header nav .active {
 }
 
 /* ! menu start */
-.box-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(29rem, 1fr));
-  gap: 1.5rem;
-
-  /*  repeat ==> belirtileni tekrarla
-      auto-fit ==> mevcüt alanı doldur ve mümkün olan en fazla sütünü oluştur, eğer alan daralırsa sütünlar otomatik olarak küçülsün ve gerektiğinde kaydırılırsın.
-      30rem ==> min genişilik ==>  her sütunun en az 30rem genişliğinde olacak, 30rem'lik açıldığı an yeni sütünü oluştur.
-      1fr ==> maksimum genişlik ==> eğer yeni açılan yer 30rem değilse 1fr (alabildiği alanın tamamını al) olarak ayarla, yani eşit olarak böl.
-}
-
-.box {
+.menu .box {
   background-color: #fff;
   padding: 3rem;
   border-radius: 3rem;
@@ -168,34 +270,442 @@ header nav .active {
   align-items: flex-start;
 }
 
-.box-head img {
+.menu .box-head img {
   width: 100%;
-  object-fit: cover; /* resmi kapsayıcısının içine sığaçak şekilde ayarla*/
+  object-fit: cover; /* resmi kapsayıcısının içine sığaçak şekilde ayarla */
 }
 .menu-category {
   font-size: 1.2rem;
 }
 
-.box-head h3 {
+.menu .box-head h3 {
   font-size: 3rem;
   padding: 1rem 0;
 }
 
-.price {
+.menu .price {
   font-size: 2.5rem;
   padding: 0.5rem 0;
 }
 
-.price span {
+.menu .price span {
   font-weight: 300;
   text-decoration: line-through; /* Üstünü çiz*/
   font-size: 1.5rem;
 }
 
-
 /* ! Product start  */
+.products .box {
+  text-align: center;
+  background-color: #fff;
+  position: relative;
+  border-radius: 3rem;
+  height: 60rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 3rem;
+}
 
-.products .box{
+.products .box-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  z-index: 10;
+}
+
+.products .box-head .title {
+  font-size: 1.4rem;
+}
+
+.products .box-head .name {
+  font-size: 4rem;
+  font-weight: bold;
+  overflow-wrap: anywhere; /* metnin bulunduğu kapsayıcının dışına taşmasını engeller, taşan kısım sonraki satıra geçer*/
+}
+
+.products .box-container img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  object-fit: cover;
+  transform: translate(
+    -50%,
+    -50%
+  ); /*  hem yatay hem de dikey olarak tam merkezde görünmesini sağlar.*/
+  border-radius: 3rem;
+}
+
+.products .dark-bg .title,
+.products .dark-bg .name {
+  color: #fff;
+}
+.products .dark-bg img {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: unset; /*bir öğeye daha önce bir transform uygulanmışsa ve bu dönüşümü kaldırmak istiyorsak*/
+}
+
+.products .box-bottom {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  position: relative;
 
+  z-index: 10;
+}
+
+.products .box-bottom .info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.products .box-bottom .info .price {
+  font-size: 3rem;
+}
+
+.products .box-bottom .info .amount {
+  font-size: 1.4rem;
+}
+
+.products .dark-bg .box-bottom .info .price,
+.products .dark-bg .box-bottom .info .amount {
+  color: #fff;
+}
+
+.products .product-btn a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 6.5rem;
+  height: 6.5rem;
+  border: 0.2rem solid var(--main-color);
+}
+
+.products .dark-bg .product-btn a {
+  color: #fff;
+}
+
+.products .product-btn i {
+  font-size: 1.6rem;
+}
+
+/* ! About start  */
+
+.about .row {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 2rem;
+}
+
+.about .row .image {
+  flex: 1 1 45rem;
+}
+.about .row .image img {
+  width: 100%;
+}
+
+.about .row .content {
+  flex: 1 1 45rem;
+}
+
+.about .row .content h3 {
+  font-size: 3rem;
+  color: #fff;
+}
+.about .row .content p {
+  font-size: 1.6rem;
+  line-height: 1.8rem;
+  color: #fff;
+  padding: 1rem 0;
+  font-weight: lighter;
+}
+.about .row .content .btn:hover {
+  background-color: #fff;
+  color: var(--bg-color);
+}
+
+/* ! Review start */
+
+.review .box {
+  border: var(--border);
+  text-align: center;
+  background-color: #fff;
+  padding: 3rem 2rem;
+  border-radius: 3rem;
+}
+
+.review .box p {
+  font-size: 1.5rem;
+  line-height: 1.8;
+  padding: 2rem 0;
+}
+
+.review .box .user {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.review .box h3 {
+  padding: 1rem 0;
+  font-size: 2rem;
+  color: var(--main-color);
+}
+
+.review .box .stars i {
+  color: gold;
+  font-size: 1.5rem;
+}
+
+/* ! Contact section Start  */
+.contact .row {
+  display: flex;
+  background-color: var(--bg-color);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.contact .row iframe {
+  flex: 1 1 45rem;
+  width: 100%;
+
+  object-fit: cover;
+}
+
+.contact .row form {
+  flex: 1 1 45rem;
+  padding: 5rem 2rem;
+  text-align: center;
+}
+
+.contact .row form h3 {
+  font-size: 3.5rem;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.contact .row form .input-box {
+  display: flex;
+  align-items: center;
+  margin: 2rem 0;
+  border: var(--border);
+}
+
+.contact .row form .input-box i {
+  color: #fff;
+  font-size: 2rem;
+  padding-left: 2rem;
+}
+
+.contact .row form .input-box input {
+  width: 100%;
+  padding: 2rem;
+  font-size: 1.7rem;
+  color: #fff;
+  text-transform: none; /* metnin tüm özelliklerini kaldır.*/
+  background: none;
+}
+
+.contact .row form .btn {
+  background-color: #fff;
+  color: var(--main-color);
+  font-weight: bold;
+}
+
+.contact .row form .btn:hover {
+  background-color: var(--main-color);
+  color: #fff;
+}
+
+/* ! Blog section Start */
+
+.blogs .box {
+  background-color: #fff;
+  border-radius: 3rem;
+}
+
+.blogs .box:hover img {
+  transform: scale(1.2);
+}
+.blogs .image {
+  height: 25rem;
+  overflow: hidden;
+  width: 100%;
+  border-top-left-radius: 3rem;
+  border-top-right-radius: 3rem;
+}
+
+.blogs .image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.blogs .content {
+  padding: 2rem;
+}
+
+.blogs .content .title {
+  font-size: 2.5rem;
+  line-height: 1.5;
+  color: var(--main-color);
+}
+
+.blogs .content span {
+  display: block;
+  padding-top: 1rem;
+  font-size: 2rem;
+}
+
+.blogs .content p {
+  font-size: 1.6rem;
+  line-height: #ccc;
+  padding: 1rem 0;
+}
+
+/* ! footer section start  */
+.footer {
+  background-color: var(--bg-color);
+  text-align: center;
+}
+
+.footer .search {
+  display: flex;
+  justify-content: center;
+}
+
+.footer .search-input {
+  width: 30rem;
+}
+
+.footer .search .btn-primary {
+  background-color: var(--main-color);
+  padding: 1rem 2rem;
+  margin-left: 1rem;
+}
+
+.footer .share {
+  padding: 2rem 0;
+}
+
+.footer .share a {
+  width: 5rem;
+  height: 5rem;
+  line-height: 5rem;
+  color: #fff;
+  font-size: 3rem;
+  border: var(--border);
+  border-radius: 50%;
+  margin: 0.3rem;
+}
+
+.footer .share a:hover {
+  background-color: var(--main-color);
+}
+
+.footer .links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer .links a {
+  background-color: var(--main-color);
+  padding: 0.7rem 2rem;
+  font-size: 2rem;
+  color: #fff;
+  border: var(--border);
+}
+
+.footer .links a:hover {
+  background-color: var(--bg-color);
+  opacity: 0.7;
+}
+
+.footer .links a.active {
+  background-color: var(--bg-color);
+}
+
+.footer .credit {
+  font-size: 2rem;
+  color: #fff;
+  font-weight: 300;
+  padding-top: 1.5rem;
+}
+
+.footer .credit a {
+  text-transform: uppercase;
+  color: var(--main-color);
+}
+
+/*! Responsive Start */
+@media (max-width: 991px) {
+  html {
+    font-size: 55%;
+  }
+
+  header {
+    padding: 1.5rem 2rem;
+  }
+  header img {
+    height: 7rem;
+  }
+
+  section {
+    padding: 2rem;
+  }
+
+  .products .box-head .name {
+    font-size: 3.4rem;
+  }
+}
+
+@media (max-width: 770px) {
+  header #menu-btn {
+    display: inline-block;
+  }
+
+  header nav {
+    position: absolute;
+    top: 95%;
+    background-color: #fff;
+    height: calc(100vh - 9rem);
+    width: 30rem;
+    box-shadow: 0px 20px 14px 0px #000;
+    border-radius: 2rem;
+    right: -100%; /* öğenin sağ kenarını, kendisinin genişliğinin tamamı kadar (yani %100) sağa kaydır.Böylelikle görünüm alanının dışına çıkar görünmez hale gelir. */
+  }
+
+  header nav.active {
+    right: 3rem;
+  }
+
+  header nav a {
+    color: var(--bg-color);
+    display: block;
+    margin: 1.5rem;
+    padding: 0.5rem;
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  html {
+    font-size: 50%;
+  }
+}
+
+@media (min-width: 991px) and (max-width: 1024px) {
+  header nav a {
+    font-size: 1.5rem;
+  }
 }
