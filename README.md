@@ -1,4 +1,4 @@
-# Restorant
+# Restoran
 
 Çok Sayfalı Responsive Yapılı Web Sitesi
 
